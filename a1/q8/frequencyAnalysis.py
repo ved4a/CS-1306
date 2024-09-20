@@ -31,19 +31,16 @@ def getFrequencyOrder(msg):
         else:
             freqToLetter[letterToFreq[letter]].append(letter)
 
-    # Third, put each list of letters in reverse "ETAOIN" order, and then
-    # convert it to a string:
+    # List of letters in reverse "ETAOIN" order, convert to string
     for freq in freqToLetter:
         freqToLetter[freq].sort(key=ETAOIN.find, reverse=True)
         freqToLetter[freq] = ''.join(freqToLetter[freq])
 
-    # Fourth, convert the freqToLetter dictionary to a list of
-    # tuple pairs (key, value), then sort them:
+    # Convert the freqToLetter dictionary to a list of tuple pairs (key, value), then sort them:
     freqPairs = list(freqToLetter.items())
     freqPairs.sort(key=getItemAtIndexZero, reverse=True)
 
-    # Fifth, now that the letters are ordered by frequency, extract all
-    # the letters for the final string:
+    # Etract all letters for the final string
     freqOrder = []
     for freqPair in freqPairs:
         freqOrder.append(freqPair[1])
@@ -51,7 +48,7 @@ def getFrequencyOrder(msg):
     return ''.join(freqOrder)
 
 def freqMatchScore(msg):
-    freqOrder = getFrequencyOrder(message)
+    freqOrder = getFrequencyOrder(msg)
 
     matchScore = 0
     # How many matches ETAOIN:
