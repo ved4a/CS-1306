@@ -1,2 +1,4 @@
-import itertools, re, pyperclip, detectEnglish
+import itertools, re, pyperclip
+import detectEnglish, vigenereCipher, frequencyAnalysis
+
 
