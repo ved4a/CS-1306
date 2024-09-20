@@ -13,3 +13,6 @@ def getLetterCount(msg):
             letterCount[letter] += 1
     
     return letterCount
+
+def getItemAtIndexZero(items):
+    return items[0]
