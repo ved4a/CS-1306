@@ -14,5 +14,41 @@ def getLetterCount(msg):
     
     return letterCount
 
+# Returns first item in a list
 def getItemAtIndexZero(items):
     return items[0]
+
+# Returns a string of letters arranged in order of occurence in msg
+def getFrequencyOrder(msg):
+    # Get dictionary of letter w/ frequency count:
+    letterToFreq = getLetterCount(msg)
+
+    # Make a dictionary of each frequency count to each letter(s) w that frequency:
+    freqToLetter = {}
+    for letter in ALPHABET:
+        if letterToFreq[letter] not in freqToLetter:
+            freqToLetter[letterToFreq[letter]] = [letter]
+        else:
+            freqToLetter[letterToFreq[letter]].append(letter)
+
+    # Third, put each list of letters in reverse "ETAOIN" order, and then
+    # convert it to a string:
+    for freq in freqToLetter:
+        freqToLetter[freq].sort(key=ETAOIN.find, reverse=True)
+        freqToLetter[freq] = ''.join(freqToLetter[freq])
+
+    # Fourth, convert the freqToLetter dictionary to a list of
+    # tuple pairs (key, value), then sort them:
+    freqPairs = list(freqToLetter.items())
+    freqPairs.sort(key=getItemAtIndexZero, reverse=True)
+
+    # Fifth, now that the letters are ordered by frequency, extract all
+    # the letters for the final string:
+    freqOrder = []
+    for freqPair in freqPairs:
+        freqOrder.append(freqPair[1])
+
+    return ''.join(freqOrder)
+
+def freqMatchScore(msg):
+    
