@@ -51,4 +51,16 @@ def getFrequencyOrder(msg):
     return ''.join(freqOrder)
 
 def freqMatchScore(msg):
-    
+    freqOrder = getFrequencyOrder(message)
+
+    matchScore = 0
+    # How many matches ETAOIN:
+    for commonLetter in ETAOIN[:6]:
+        if commonLetter in freqOrder[:6]:
+            matchScore += 1
+    # How many matches for lowest freq letters:
+    for uncommonLetter in ETAOIN[-6:]:
+        if uncommonLetter in freqOrder[-6:]:
+            matchScore += 1
+
+    return matchScore
