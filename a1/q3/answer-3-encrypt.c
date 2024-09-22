@@ -48,7 +48,7 @@ void map_message_to_key(char *key, char *message)
         array_sizes[array_index]++;
     }
 
-    
+    print_sorted_key_arrays(key, key_arrays, array_sizes, key_len);
 }
 
 void swap(char *a, char *b)
