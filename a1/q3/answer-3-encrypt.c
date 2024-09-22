@@ -10,6 +10,12 @@ void sort_string(char str[]);
 void print_sorted_key_arrays(char *key, char key_arrays[][MAX], int *array_sizes, int key_len);
 void to_uppercase(char str[]);
 
+// Define a structure to store both key character and its original index
+typedef struct {
+    char ch;
+    int index;
+} KeyCharIndex;
+
 int main(void){
      char key[MAX], message[MAX];
 
