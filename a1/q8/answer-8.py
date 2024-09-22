@@ -100,3 +100,62 @@ def getNthSubkeysLetters(nth, keyLen, message):
         i += keyLen
     return ''.join(letters)
 
+def attemptHackWithKeyLength(ciphertext, mostLikelyKeyLength):
+
+    ciphertextUp = ciphertext.upper()
+
+    allFreqScores = []
+    for nth in range(1, mostLikelyKeyLength + 1):
+        nthLetters = getNthSubkeysLetters(nth, mostLikelyKeyLength, ciphertextUp)
+
+        freqScores = []
+        for possibleKey in ALPHABET:
+            decryptedText = vigenereCipher.decryptMessage(possibleKey, nthLetters)
+            keyAndFreqMatchTuple = (possibleKey, frequencyAnalysis.englishFreqMatchScore(decryptedText))
+            freqScores.append(keyAndFreqMatchTuple)
+
+        freqScores.sort(key=getItemAtIndexOne, reverse=True)
+
+        allFreqScores.append(freqScores[:NUM_MOST_FREQ_LETTERS])
+
+    if not SILENT_MODE:
+        for i in range(len(allFreqScores)):
+
+            print('Possible letters for letter %s of the key: ' % (i + 1), end='')
+            for freqScore in allFreqScores[i]:
+                print('%s ' % freqScore[0], end='')
+            print()
+
+
+
+    for indexes in itertools.product(range(NUM_MOST_FREQ_LETTERS), repeat=mostLikelyKeyLength):
+
+        possibleKey = ''
+        for i in range(mostLikelyKeyLength):
+            possibleKey += allFreqScores[i][indexes[i]][0]
+
+        if not SILENT_MODE:
+            print('Attempting with key: %s' % (possibleKey))
+
+        decryptedText = vigenereCipher.decryptMessage(possibleKey, ciphertextUp)
+
+        if detectEnglish.isEnglish(decryptedText):
+
+            origCase = []
+            for i in range(len(ciphertext)):
+                if ciphertext[i].isupper():
+                    origCase.append(decryptedText[i].upper())
+                else:
+                    origCase.append(decryptedText[i].lower())
+            decryptedText = ''.join(origCase)
+
+            print('Possible encryption hack with key %s:' % (possibleKey))
+            print(decryptedText[:200]) # Only show first 200 characters.
+            print()
+            print('Enter D if done, anything else to continue hacking:')
+            response = input('> ')
+
+            if response.strip().upper().startswith('D'):
+                return decryptedText
+
+    return None
