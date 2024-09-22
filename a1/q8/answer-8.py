@@ -36,11 +36,20 @@ def findRepeatSeq(message):
     return seqSpacings
 
 def getFactors(num):
-    # this explicitly excludes num
+    # this explicitly excludes 1 bc it's not useful
     if num < 2:
         return []
     
     factors = []
 
     for i in range(2, MAX_KEY_LENGTH + 1):
-        if num % i == 0 
+        if num % i == 0:
+            factors.append(i)
+            otherFactor = int(num / i)
+
+            if otherFactor < MAX_KEY_LENGTH + 1 and otherFactor != 1:
+                factors.append(otherFactor)
+    return list(set(factors)) # to remove duplicate factors
+
+def getItemAtIndexOne(items):
+    return
