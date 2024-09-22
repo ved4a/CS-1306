@@ -54,3 +54,20 @@ def getFactors(num):
 def getItemAtIndexOne(items):
     return items[1]
 
+def getMCF(seqFactors):
+    factorCounts = {}
+
+    for seq in seqFactors:
+        factorList = seqFactors[seq]
+        for factor in factorList:
+            if factor not in factorCounts:
+                factorCounts[factor] = 0
+            factorCounts[factor] += 1
+    
+    factorsByCount = []
+    for factor in factorCounts:
+        if factor <= MAX_KEY_LENGTH:
+            factorsByCount.append((factor, factorsByCount[factor]))
+    
+    factorsByCount.sort(key=getItemAtIndexOne, reverse=True)
+
