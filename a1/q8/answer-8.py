@@ -90,5 +90,13 @@ def kasiskiExam(cipherText):
     
     return likelyKeyLens
 
+def getNthSubkeysLetters(nth, keyLen, message):
+    message = NONLETTERS_PATTERN.sub('', message)
 
+    i = nth - 1
+    letters = []
+    while i < len(message):
+        letters.append(message[i])
+        i += keyLen
+    return ''.join(letters)
 
