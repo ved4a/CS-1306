@@ -5,6 +5,7 @@
 
 void map_message_to_key(char *key, char *message);
 void swap(char *a, char *b);
+void sort_string(char str[]);
 
 int main(void){
      char key[MAX], message[MAX];
@@ -67,4 +68,21 @@ void swap(char *a, char *b)
     char temp = *a;
     *a = *b;
     *b = temp;
+}
+
+void sort_string(char str[])
+{
+    int n = strlen(str);
+
+    // Implementing bubble sort
+    for (int i = 0; i < n -1; i++)
+    {
+        for (int j = 0; j < n - i - 1; j++)
+        {
+            if (str[j] > str[j + 1])
+            {
+                swap(&str[j], &str[j + 1]);
+            }
+        }
+    }
 }
