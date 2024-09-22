@@ -10,6 +10,7 @@ typedef struct {
 } KeyCharIndex;
 
 void decrypt_message(char *key, char *ciphertext);
+void to_uppercase(char str[]);
 
 int main(void)
 {
@@ -78,4 +79,13 @@ void decrypt_message(char *key, char *ciphertext)
         }
     }
     printf("\n");
+}
+
+void to_uppercase(char str[])
+{
+    int len = strlen(str);
+    for (int i = 0; i < len; i++)
+    {
+        str[i] = toupper(str[i]);
+    }
 }
