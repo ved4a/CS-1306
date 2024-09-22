@@ -4,6 +4,7 @@
 #define MAX 100
 
 void map_message_to_key(char *key, char *message);
+void swap(char *a, char *b);
 
 int main(void){
      char key[MAX], message[MAX];
@@ -59,4 +60,11 @@ void map_message_to_key(char *key, char *message)
         }
         printf("\n");
     }
+}
+
+void swap(char *a, char *b)
+{
+    char temp = *a;
+    *a = *b;
+    *b = temp;
 }
