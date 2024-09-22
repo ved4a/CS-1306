@@ -14,36 +14,27 @@ void map_message_to_key(char *key, char *message);
 void print_sorted_key_arrays(char *key, char key_arrays[][MAX], int *array_sizes, int key_len);
 void to_uppercase(char str[]);
 void sort_key_with_indices(char *key, KeyCharIndex sorted_key[], int key_len);
+void remove_spaces(char str[]);
 
 int main(void){
     char key[MAX], message[MAX];
 
-    do
-    {
-        printf("Enter the key (e.g., HACK): ");
-        scanf("%s", key);
+    // Input the key and message
+    printf("Enter the key (e.g., HACK): ");
+    fgets(key, MAX, stdin);
+    key[strcspn(key, "\n")] = '\0';  // Remove the newline at the end of input
 
-        if (contains_spaces(key))
-        {
-            printf("Error: Key cannot contain spaces. Please re-enter without spaces.\n");
-        }
-    } while (contains_spaces(key));
+    printf("Enter the message (e.g., HELLOWORLD): ");
+    fgets(message, MAX, stdin);
+    message[strcspn(message, "\n")] = '\0';  // Remove the newline at the end of input
 
-    do
-    {
-        printf("Enter the message (e.g., HELLOWORLD): ");
-        scanf("%s", message);
-
-        if (contains_spaces(message))
-        {
-            printf("Error: Message cannot contain spaces. Please re-enter without spaces.\n");
-        }
-    } while (contains_spaces(message));
+    // Automatically remove spaces from the key and message
+    remove_spaces(key);
+    remove_spaces(message);
 
     // Convert to uppercase for consistency
     to_uppercase(key);
     to_uppercase(message);
-
 
     // Map the message to the key arrays
     map_message_to_key(key, message);
@@ -121,4 +112,16 @@ void sort_key_with_indices(char *key, KeyCharIndex sorted_key[], int key_len) {
             }
         }
     }
+}
+
+void remove_spaces(char str[]) {
+    int i, j = 0;
+    char temp[MAX];
+    for (i = 0; str[i] != '\0'; i++) {
+        if (!isspace(str[i])) {  // Only keep non-space characters
+            temp[j++] = str[i];
+        }
+    }
+    temp[j] = '\0';
+    strcpy(str, temp);  // Copy the string without spaces back into the original
 }
