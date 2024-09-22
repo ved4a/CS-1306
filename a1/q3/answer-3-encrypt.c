@@ -14,16 +14,32 @@ void map_message_to_key(char *key, char *message);
 void print_sorted_key_arrays(char *key, char key_arrays[][MAX], int *array_sizes, int key_len);
 void to_uppercase(char str[]);
 void sort_key_with_indices(char *key, KeyCharIndex sorted_key[], int key_len);
+int contains_spaces(char str[]);
 
 int main(void){
-     char key[MAX], message[MAX];
+    char key[MAX], message[MAX];
 
-     // Input the key and message
-    printf("Enter the key (e.g., HACK): ");
-    scanf("%s", key);
+    do
+    {
+        printf("Enter the key (e.g., HACK): ");
+        scanf("%s", key);
 
-    printf("Enter plaintext (e.g., HELLOWORLD): ");
-    scanf("%s", message);
+        if (contains_spaces(key))
+        {
+            printf("Error: Key cannot contain spaces. Please re-enter without spaces.\n");
+        }
+    } while (contains_spaces(key));
+
+    do
+    {
+        printf("Enter the message (e.g., HELLOWORLD): ");
+        scanf("%s", message);
+
+        if (contains_spaces(message))
+        {
+            printf("Error: Message cannot contain spaces. Please re-enter without spaces.\n");
+        }
+    } while (contains_spaces(message));
 
     // Convert to uppercase for consistency
     to_uppercase(key);
@@ -106,4 +122,13 @@ void sort_key_with_indices(char *key, KeyCharIndex sorted_key[], int key_len) {
             }
         }
     }
+}
+
+int contains_spaces(char str[]) {
+    for (int i = 0; i < strlen(str); i++) {
+        if (str[i] == ' ') {
+            return 1;
+        }
+    }
+    return 0;
 }
