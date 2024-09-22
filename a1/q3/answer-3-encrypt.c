@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <string.h>
+#include <ctype.h>
 
 #define MAX 100
 
@@ -7,6 +8,7 @@ void map_message_to_key(char *key, char *message);
 void swap(char *a, char *b);
 void sort_string(char str[]);
 void print_sorted_key_arrays(char *key, char key_arrays[][MAX], int *array_sizes, int key_len);
+void to_uppercase(char str[]);
 
 int main(void){
      char key[MAX], message[MAX];
@@ -17,6 +19,11 @@ int main(void){
 
     printf("Enter the message (e.g., HELLOWORLD): ");
     scanf("%s", message);
+
+    // Convert to uppercase for consistency
+    to_uppercase(key);
+    to_uppercase(message);
+
 
     // Map the message to the key arrays
     map_message_to_key(key, message);
@@ -114,5 +121,14 @@ void print_sorted_key_arrays(char *key, char key_arrays[][MAX], int *array_sizes
             printf("%c", key_arrays[original_index][j]);
         }
         printf("\n");
+    }
+}
+
+void to_uppercase(char str[])
+{
+    int len = strlen(str);
+    for (int i = 0; i < len; i++)
+    {
+        str[i] = toupper(str[i]);
     }
 }
