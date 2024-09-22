@@ -14,7 +14,6 @@ void map_message_to_key(char *key, char *message);
 void print_sorted_key_arrays(char *key, char key_arrays[][MAX], int *array_sizes, int key_len);
 void to_uppercase(char str[]);
 void sort_key_with_indices(char *key, KeyCharIndex sorted_key[], int key_len);
-int contains_spaces(char str[]);
 
 int main(void){
     char key[MAX], message[MAX];
@@ -122,13 +121,4 @@ void sort_key_with_indices(char *key, KeyCharIndex sorted_key[], int key_len) {
             }
         }
     }
-}
-
-int contains_spaces(char str[]) {
-    for (int i = 0; i < strlen(str); i++) {
-        if (str[i] == ' ') {
-            return 1;
-        }
-    }
-    return 0;
 }
