@@ -159,3 +159,35 @@ def attemptHackWithKeyLength(ciphertext, mostLikelyKeyLength):
                 return decryptedText
 
     return None
+
+def hackVigenere(ciphertext):
+    # First, we need to do Kasiski Examination to figure out what the
+    # length of the ciphertext's encryption key is:
+    allLikelyKeyLengths = kasiskiExamination(ciphertext)
+    if not SILENT_MODE:
+        keyLengthStr = ''
+        for keyLength in allLikelyKeyLengths:
+            keyLengthStr += '%s ' % (keyLength)
+        print('Kasiski Examination results say the most likely key lengths are: ' + keyLengthStr + '\n')
+    hackedMessage = None
+    for keyLength in allLikelyKeyLengths:
+        if not SILENT_MODE:
+            print('Attempting hack with key length %s (%s possible keys)...' % (keyLength, NUM_MOST_FREQ_LETTERS ** keyLength))
+        hackedMessage = attemptHackWithKeyLength(ciphertext, keyLength)
+        if hackedMessage != None:
+            break
+
+    # If none of the key lengths we found using Kasiski Examination
+    # worked, start brute-forcing through key lengths:
+    if hackedMessage == None:
+        if not SILENT_MODE:
+            print('Unable to hack message with likely key length(s). Brute forcing key length...')
+        for keyLength in range(1, MAX_KEY_LENGTH + 1):
+            # Don't re-check key lengths already tried from Kasiski:
+            if keyLength not in allLikelyKeyLengths:
+                if not SILENT_MODE:
+                    print('Attempting hack with key length %s (%s possible keys)...' % (keyLength, NUM_MOST_FREQ_LETTERS ** keyLength))
+                hackedMessage = attemptHackWithKeyLength(ciphertext, keyLength)
+                if hackedMessage != None:
+                    break
+    return hackedMessage
