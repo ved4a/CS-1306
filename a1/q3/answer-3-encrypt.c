@@ -3,7 +3,20 @@
 
 #define MAX 100
 
+void map_message_to_key(char *key, char *message);
+
 int main(void){
+     char key[MAX], message[MAX];
+
+     // Input the key and message
+    printf("Enter the key (e.g., HACK): ");
+    scanf("%s", key);
+
+    printf("Enter the message (e.g., HELLOWORLD): ");
+    scanf("%s", message);
+
+    // Map the message to the key arrays
+    map_message_to_key(key, message);
 
     return 0;
 }
@@ -35,7 +48,7 @@ void map_message_to_key(char *key, char *message)
     // Print
     for (int i = 0; i < key_len; i++)
     {
-        printf("%c = [", key[i]);
+        printf("%c = ", key[i]);
         for (int j = 0; j < array_sizes[i]; j++)
         {
             printf("%c", key_arrays[i][j]);
@@ -44,6 +57,6 @@ void map_message_to_key(char *key, char *message)
                 printf(", ");
             }
         }
-        printf("]\n");
+        printf("\n");
     }
 }
