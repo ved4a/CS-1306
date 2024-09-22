@@ -27,6 +27,17 @@ int main(void)
     fgets(ciphertext, MAX, stdin);
     ciphertext[strcspn(ciphertext, "\n")] = '\0';
 
+    // Automatically remove spaces
+    remove_spaces(key);
+    remove_spaces(ciphertext);
+
+    // Convert to uppercase for consistency
+    to_uppercase(key);
+    to_uppercase(ciphertext);
+
+    // Decrypt the message
+    decrypt_message(key, ciphertext);
+
     return 0;
 }
 
