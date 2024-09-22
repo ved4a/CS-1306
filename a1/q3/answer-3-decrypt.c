@@ -11,6 +11,7 @@ typedef struct {
 
 void decrypt_message(char *key, char *ciphertext);
 void to_uppercase(char str[]);
+void sort_key_with_indices(char *key, KeyCharIndex sorted_key[], int key_len);
 
 int main(void)
 {
@@ -87,5 +88,18 @@ void to_uppercase(char str[])
     for (int i = 0; i < len; i++)
     {
         str[i] = toupper(str[i]);
+    }
+}
+
+void sort_key_with_indices(char *key, KeyCharIndex sorted_key[], int key_len) {
+    // Implement bubble sort that sorts by characters and keeps track of original indices
+    for (int i = 0; i < key_len - 1; i++) {
+        for (int j = 0; j < key_len - i - 1; j++) {
+            if (sorted_key[j].ch > sorted_key[j + 1].ch) {
+                KeyCharIndex temp = sorted_key[j];
+                sorted_key[j] = sorted_key[j + 1];
+                sorted_key[j + 1] = temp;
+            }
+        }
     }
 }
