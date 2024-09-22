@@ -97,11 +97,11 @@ void print_sorted_key_arrays(char *key, char key_arrays[][MAX], int *array_sizes
         original_indices[i] = i;
     }
 
-    // Make a copy of the key to sort
+    // Key copy
     char sorted_key[MAX];
     strcpy(sorted_key, key);
 
-    // Sort the copied key using sort_string
+    // Sort the copied key
     sort_string(sorted_key);
 
     // Sort original indices based on the sorted key
