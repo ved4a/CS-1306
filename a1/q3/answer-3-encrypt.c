@@ -9,6 +9,7 @@ void swap(char *a, char *b);
 void sort_string(char str[]);
 void print_sorted_key_arrays(char *key, char key_arrays[][MAX], int *array_sizes, int key_len);
 void to_uppercase(char str[]);
+void sort_key_with_indices(char *key, KeyCharIndex sorted_key[], int key_len);
 
 // Define a structure to store both key character and its original index
 typedef struct {
@@ -88,53 +89,35 @@ void sort_string(char str[])
     }
 }
 
-void print_sorted_key_arrays(char *key, char key_arrays[][MAX], int *array_sizes, int key_len)
-{
-    // Create an array to store the original indices of the key
-    int original_indices[key_len];
-    for (int i = 0; i < key_len; i++)
-    {
-        original_indices[i] = i;
-    }
-
-    // Key copy
-    char sorted_key[MAX];
-    strcpy(sorted_key, key);
-
-    // Sort the copied key
-    sort_string(sorted_key);
-
-    // Sort original indices based on the sorted key
-    for (int i = 0; i < key_len; i++)
-    {
-        for (int j = 0; j < key_len; j++)
-        {
-            if (sorted_key[i] == key[j])
-            {
-                original_indices[i] = j;
-                break;
-            }
-        }
-    }
-
-    // Print the arrays according to the sorted key and original indices
-    for (int i = 0; i < key_len; i++)
-    {
-        int original_index = original_indices[i];
-        printf("%c : ", sorted_key[i]);
-        for (int j = 0; j < array_sizes[original_index]; j++)
-        {
-            printf("%c", key_arrays[original_index][j]);
-        }
-        printf("\n");
-    }
-}
-
 void to_uppercase(char str[])
 {
     int len = strlen(str);
     for (int i = 0; i < len; i++)
     {
         str[i] = toupper(str[i]);
+    }
+}
+
+void print_sorted_key_arrays(char *key, char key_arrays[][MAX], int *array_sizes, int key_len) {
+    // Array to hold the sorted key along with their original indices
+    KeyCharIndex sorted_key[key_len];
+
+    // Populate the array with the characters from the key and their original indices
+    for (int i = 0; i < key_len; i++) {
+        sorted_key[i].ch = key[i];
+        sorted_key[i].index = i;
+    }
+
+    // Sort the array based on the characters, but keep their original indices
+    sort_key_with_indices(key, sorted_key, key_len);
+
+    // Print the arrays according to the sorted key and their original indices
+    for (int i = 0; i < key_len; i++) {
+        int original_index = sorted_key[i].index;
+        printf("%c : ", sorted_key[i].ch);
+        for (int j = 0; j < array_sizes[original_index]; j++) {
+            printf("%c", key_arrays[original_index][j]);
+        }
+        printf("\n");
     }
 }
