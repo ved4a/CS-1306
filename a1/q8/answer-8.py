@@ -52,4 +52,5 @@ def getFactors(num):
     return list(set(factors)) # to remove duplicate factors
 
 def getItemAtIndexOne(items):
-    return
+    return items[1]
+
