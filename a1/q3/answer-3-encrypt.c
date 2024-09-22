@@ -4,18 +4,16 @@
 
 #define MAX 100
 
-void map_message_to_key(char *key, char *message);
-void swap(char *a, char *b);
-void sort_string(char str[]);
-void print_sorted_key_arrays(char *key, char key_arrays[][MAX], int *array_sizes, int key_len);
-void to_uppercase(char str[]);
-void sort_key_with_indices(char *key, KeyCharIndex sorted_key[], int key_len);
-
 // Define a structure to store both key character and its original index
 typedef struct {
     char ch;
     int index;
 } KeyCharIndex;
+
+void map_message_to_key(char *key, char *message);
+void print_sorted_key_arrays(char *key, char key_arrays[][MAX], int *array_sizes, int key_len);
+void to_uppercase(char str[]);
+void sort_key_with_indices(char *key, KeyCharIndex sorted_key[], int key_len);
 
 int main(void){
      char key[MAX], message[MAX];
@@ -63,30 +61,6 @@ void map_message_to_key(char *key, char *message)
     }
 
     print_sorted_key_arrays(key, key_arrays, array_sizes, key_len);
-}
-
-void swap(char *a, char *b)
-{
-    char temp = *a;
-    *a = *b;
-    *b = temp;
-}
-
-void sort_string(char str[])
-{
-    int n = strlen(str);
-
-    // Implementing bubble sort
-    for (int i = 0; i < n -1; i++)
-    {
-        for (int j = 0; j < n - i - 1; j++)
-        {
-            if (str[j] > str[j + 1])
-            {
-                swap(&str[j], &str[j + 1]);
-            }
-        }
-    }
 }
 
 void to_uppercase(char str[])
