@@ -6,6 +6,7 @@
 void map_message_to_key(char *key, char *message);
 void swap(char *a, char *b);
 void sort_string(char str[]);
+void print_sorted_key_arrays(char *key, char key_arrays[][MAX], int *array_sizes, int key_len);
 
 int main(void){
      char key[MAX], message[MAX];
@@ -84,5 +85,47 @@ void sort_string(char str[])
                 swap(&str[j], &str[j + 1]);
             }
         }
+    }
+}
+
+void print_sorted_key_arrays(char *key, char key_arrays[][MAX], int *array_sizes, int key_len)
+{
+    // Create an array to store the original indices of the key
+    int original_indices[key_len];
+    for (int i = 0; i < key_len; i++)
+    {
+        original_indices[i] = i;
+    }
+
+    // Make a copy of the key to sort
+    char sorted_key[MAX];
+    strcpy(sorted_key, key);
+
+    // Sort the copied key using sort_string
+    sort_string(sorted_key);
+
+    // Sort original indices based on the sorted key
+    for (int i = 0; i < key_len; i++)
+    {
+        for (int j = 0; j < key_len; j++)
+        {
+            if (sorted_key[i] == key[j])
+            {
+                original_indices[i] = j;
+                break;
+            }
+        }
+    }
+
+    // Print the arrays according to the sorted key and original indices
+    for (int i = 0; i < key_len; i++)
+    {
+        int original_index = original_indices[i];
+        printf("%c : ", sorted_key[i]);
+        for (int j = 0; j < array_sizes[original_index]; j++)
+        {
+            printf("%c", key_arrays[original_index][j]);
+        }
+        printf("\n");
     }
 }
