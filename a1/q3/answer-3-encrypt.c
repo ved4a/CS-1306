@@ -22,7 +22,7 @@ int main(void){
     printf("Enter the key (e.g., HACK): ");
     scanf("%s", key);
 
-    printf("Enter the message (e.g., HELLOWORLD): ");
+    printf("Enter plaintext (e.g., HELLOWORLD): ");
     scanf("%s", message);
 
     // Convert to uppercase for consistency
@@ -86,13 +86,12 @@ void print_sorted_key_arrays(char *key, char key_arrays[][MAX], int *array_sizes
     sort_key_with_indices(key, sorted_key, key_len);
 
     // Print the arrays according to the sorted key and their original indices
+    printf("Encrypted text: ");
     for (int i = 0; i < key_len; i++) {
         int original_index = sorted_key[i].index;
-        printf("%c : ", sorted_key[i].ch);
         for (int j = 0; j < array_sizes[original_index]; j++) {
             printf("%c", key_arrays[original_index][j]);
         }
-        printf("\n");
     }
 }
 
