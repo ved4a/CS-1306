@@ -48,13 +48,13 @@ void map_message_to_key(char *key, char *message)
     // Print
     for (int i = 0; i < key_len; i++)
     {
-        printf("%c = ", key[i]);
+        printf("%c : ", key[i]);
         for (int j = 0; j < array_sizes[i]; j++)
         {
             printf("%c", key_arrays[i][j]);
             if (j < array_sizes[i] - 1)
             {
-                printf(", ");
+                printf("");
             }
         }
         printf("\n");
