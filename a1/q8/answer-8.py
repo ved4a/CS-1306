@@ -20,3 +20,27 @@ def main():
     else:
         print('Failed to hack encryption.')
 
+def findRepeatSeq(message):
+    message = NONLETTERS_PATTERN.sub('', message.upper())
+    seqSpacings = {}
+
+    for seqLen in range(3,6):
+        for seqStart in range(len(message) - seqLen):
+            seq = message[seqStart:seqStart + seqLen]
+
+            for i in range(seqStart + seqLen, len(message) - seqLen):
+                if message[i:i + seqLen] == seq:
+                    if seq not in seqSpacings:
+                        seqSpacings[seq] = []
+                        seqSpacings[seq].append(i - seqStart)
+    return seqSpacings
+
+def getFactors(num):
+    # this explicitly excludes num
+    if num < 2:
+        return []
+    
+    factors = []
+
+    for i in range(2, MAX_KEY_LENGTH + 1):
+        if num % i == 0 
