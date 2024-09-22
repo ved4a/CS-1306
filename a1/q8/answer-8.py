@@ -150,7 +150,7 @@ def attemptHackWithKeyLength(ciphertext, mostLikelyKeyLength):
             decryptedText = ''.join(origCase)
 
             print('Possible encryption hack with key %s:' % (possibleKey))
-            print(decryptedText[:200]) # Only show first 200 characters.
+            print(decryptedText[:200])
             print()
             print('Enter D if done, anything else to continue hacking:')
             response = input('> ')
@@ -161,14 +161,13 @@ def attemptHackWithKeyLength(ciphertext, mostLikelyKeyLength):
     return None
 
 def hackVigenere(ciphertext):
-    # First, we need to do Kasiski Examination to figure out what the
-    # length of the ciphertext's encryption key is:
-    allLikelyKeyLengths = kasiskiExamination(ciphertext)
+
+    allLikelyKeyLengths = kasiskiExam(ciphertext)
     if not SILENT_MODE:
         keyLengthStr = ''
         for keyLength in allLikelyKeyLengths:
             keyLengthStr += '%s ' % (keyLength)
-        print('Kasiski Examination results say the most likely key lengths are: ' + keyLengthStr + '\n')
+        print('Results of the Kasiski Examination say the most likely key lengths are: ' + keyLengthStr + '\n')
     hackedMessage = None
     for keyLength in allLikelyKeyLengths:
         if not SILENT_MODE:
@@ -177,8 +176,6 @@ def hackVigenere(ciphertext):
         if hackedMessage != None:
             break
 
-    # If none of the key lengths we found using Kasiski Examination
-    # worked, start brute-forcing through key lengths:
     if hackedMessage == None:
         if not SILENT_MODE:
             print('Unable to hack message with likely key length(s). Brute forcing key length...')
