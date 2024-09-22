@@ -12,6 +12,7 @@ typedef struct {
 void decrypt_message(char *key, char *ciphertext);
 void to_uppercase(char str[]);
 void sort_key_with_indices(char *key, KeyCharIndex sorted_key[], int key_len);
+void remove_spaces(char str[]);
 
 int main(void)
 {
@@ -91,7 +92,8 @@ void to_uppercase(char str[])
     }
 }
 
-void sort_key_with_indices(char *key, KeyCharIndex sorted_key[], int key_len) {
+void sort_key_with_indices(char *key, KeyCharIndex sorted_key[], int key_len)
+{
     // Implement bubble sort that sorts by characters and keeps track of original indices
     for (int i = 0; i < key_len - 1; i++) {
         for (int j = 0; j < key_len - i - 1; j++) {
@@ -102,4 +104,17 @@ void sort_key_with_indices(char *key, KeyCharIndex sorted_key[], int key_len) {
             }
         }
     }
+}
+
+void remove_spaces(char str[])
+{
+    int i, j = 0;
+    char temp[MAX];
+    for (i = 0; str[i] != '\0'; i++) {
+        if (!isspace(str[i])) {  // Only keep non-space characters
+            temp[j++] = str[i];
+        }
+    }
+    temp[j] = '\0';
+    strcpy(str, temp);  // Copy the string without spaces back into the original
 }
