@@ -71,3 +71,24 @@ def getMCF(seqFactors):
     
     factorsByCount.sort(key=getItemAtIndexOne, reverse=True)
 
+    return factorsByCount
+
+def kasiskiExam(cipherText):
+    repeatedSeqSpacings = findRepeatSeq(cipherText)
+
+    seqFactors = {}
+    for seq in repeatedSeqSpacings:
+        seqFactors[seq] = []
+        for spacing in repeatedSeqSpacings[seq]:
+            seqFactors[seq].extend(getFactors(spacing))
+    
+    factorsByCount = getFactors(seqFactors)
+
+    likelyKeyLens = []
+    for twoIntTuple in factorsByCount:
+        likelyKeyLens.append(twoIntTuple[0])
+    
+    return likelyKeyLens
+
+
+
