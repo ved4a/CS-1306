@@ -98,6 +98,32 @@ void Analyze::guessKey() {
     keyIndex2 = bestIdx2;
 }
 
+//-------------------------------------------------------------------
+double Analyze::divergence(const ByteArray& s) const {
+    double q[ALPHABETSIZE] = {0}; // Frequency distribution of the decrypted message
+    double totalBytes = s.size();
+
+    // Calculate frequencies for the decrypted message
+    for (unsigned char byte : s) {
+        if (byte < ALPHABETSIZE) {
+            q[byte]++;
+        }
+    }
+
+    // Normalize the frequency distribution for the decrypted message
+    for (int i = 0; i < ALPHABETSIZE; ++i) {
+        q[i] /= totalBytes;
+    }
+
+    // Calculate the divergence between the reference distribution and the decrypted message
+    double totalDivergence = 0.0;
+    for (int b = 0; b < ALPHABETSIZE; ++b) {
+        totalDivergence += (dist.prob[b] - q[b]) * (dist.prob[b] - q[b]);
+    }
+
+    return totalDivergence; // Return the calculated divergence
+}
+
 
 //-------------------------------------------------------------------
 // Read key from file
