@@ -65,6 +65,39 @@ void Analyze::run(int argc, char* argv[]) {
     out << plaintext;
     out.close();
 }
+//-------------------------------------------------------------------
+void Analyze::guessKey() {
+    double minDivergence = DBL_MAX;  // Start with the maximum possible value
+    unsigned bestIdx1 = 0, bestIdx2 = 1; // Initialize best indices
+
+    // Iterate over all pairs of key indices (idx1, idx2)
+    for (unsigned idx1 = 0; idx1 < NUM_KEY_SHARES; ++idx1) {
+        for (unsigned idx2 = idx1 + 1; idx2 < NUM_KEY_SHARES; ++idx2) {
+            // Compute the master key by XORing the two key shares
+            key = keyShare[idx1] ^ keyShare[idx2];
+
+            // Decrypt the ciphertext using the master key
+            cipher.setKey(key);
+            ByteArray decrypted;
+            cipher.decrypt(ciphertext, decrypted);
+
+            // Calculate the divergence
+            double currentDivergence = divergence(decrypted);
+            
+            // Check if this divergence is the smallest we have found
+            if (currentDivergence < minDivergence) {
+                minDivergence = currentDivergence;
+                bestIdx1 = idx1;
+                bestIdx2 = idx2;
+            }
+        }
+    }
+
+    // Store the best key indices found
+    keyIndex1 = bestIdx1;
+    keyIndex2 = bestIdx2;
+}
+
 
 //-------------------------------------------------------------------
 // Read key from file
