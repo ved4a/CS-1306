@@ -67,21 +67,21 @@ void Analyze::run(int argc, char* argv[]) {
 }
 //-------------------------------------------------------------------
 void Analyze::guessKey() {
-    double minDivergence = DBL_MAX;  // Start with the maximum possible value
-    unsigned bestIdx1 = 0, bestIdx2 = 1; // Initialize best indices
+    double minDivergence = DBL_MAX;  // max possible value (max double)
+    unsigned bestIdx1 = 0, bestIdx2 = 1; // initialize "best" indices (need to be diff)
 
-    // Iterate over all pairs of key indices (idx1, idx2)
+    // iterate over all pairs of key indices (idx1, idx2)
     for (unsigned idx1 = 0; idx1 < NUM_KEY_SHARES; ++idx1) {
         for (unsigned idx2 = idx1 + 1; idx2 < NUM_KEY_SHARES; ++idx2) {
-            // Compute the master key by XORing the two key shares
+            // XOR key shares
             key = keyShare[idx1] ^ keyShare[idx2];
 
-            // Decrypt the ciphertext using the master key
+            // decrypt using master key
             cipher.setKey(key);
             ByteArray decrypted;
             cipher.decrypt(ciphertext, decrypted);
 
-            // Calculate the divergence
+            // calculate divergence
             double currentDivergence = divergence(decrypted);
             
             // Check if this divergence is the smallest we have found
@@ -100,28 +100,28 @@ void Analyze::guessKey() {
 
 //-------------------------------------------------------------------
 double Analyze::divergence(const ByteArray& s) const {
-    double q[ALPHABETSIZE] = {0}; // Frequency distribution of the decrypted message
+    double q[ALPHABETSIZE] = {0}; // frequency dist of the decrypted msg
     double totalBytes = s.size();
 
-    // Calculate frequencies for the decrypted message
+    // calc freq for the decrypted msg
     for (unsigned char byte : s) {
         if (byte < ALPHABETSIZE) {
             q[byte]++;
         }
     }
 
-    // Normalize the frequency distribution for the decrypted message
+    // normalize the freq dist for the decrypted msg
     for (int i = 0; i < ALPHABETSIZE; ++i) {
         q[i] /= totalBytes;
     }
 
-    // Calculate the divergence between the reference distribution and the decrypted message
+    // calc the divergence b/w the ref dist and the decrypted msg
     double totalDivergence = 0.0;
     for (int b = 0; b < ALPHABETSIZE; ++b) {
         totalDivergence += (dist.prob[b] - q[b]) * (dist.prob[b] - q[b]);
     }
 
-    return totalDivergence; // Return the calculated divergence
+    return totalDivergence;
 }
 
 
