@@ -65,6 +65,7 @@ void Analyze::run(int argc, char* argv[]) {
     out << plaintext;
     out.close();
 }
+
 //-------------------------------------------------------------------
 void Analyze::guessKey() {
     double minDivergence = DBL_MAX;  // max possible value (max double)
