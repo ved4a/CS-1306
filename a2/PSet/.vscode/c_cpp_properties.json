@@ -3,16 +3,16 @@
     {
       "name": "Win32",
       "includePath": [
-        "$PSet/src",
-        "$PSet/src/include",
+        "${workspaceFolder}/src",
+        "${workspaceFolder}/src/include",
         "C:/Users/pink1/AppData/Local/Programs/Python/Python312/Lib/site-packages/pybind11/include",
         "C:/Users/pink1/AppData/Local/Programs/Python/Python312/Include"
       ],
       "defines": [],
-      "compilerPath": "C:/MinGW/bin/g++.exe", // Example: "C:/MinGW/bin/g++.exe" for MinGW
+      "compilerPath": "C:/MinGW/bin/g++.exe",
       "cStandard": "c11",
       "cppStandard": "c++11",
-      "intelliSenseMode": "windows-msvc-x64"
+      "intelliSenseMode": "windows-gcc-x64"
     }
   ],
   "version": 4
