@@ -1,15 +1,7 @@
-/*
- * main.cpp
- *
- *  Created on: Jan 23, 2010
- *      Author: mike
- */
-
 #include "analyze.hpp"
+#include "aes.hpp"  // Include the new AES header
 
-int main( int argc, char* argv[]) {
-    Botan::LibraryInitializer init;
-
+int main(int argc, char* argv[]) {
     try {
         Analyze anal;
         anal.run(argc, argv);
