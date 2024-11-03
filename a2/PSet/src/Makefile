@@ -1,6 +1,6 @@
 # Compile with debug option and all warnings on. ------------
-CXXFLAGS = -g -Wall -O1
-LIBS = -lbotan
+CXXFLAGS = -g -Wall -O1 `python -m pybind11 --includes`
+LIBS = `python-config --ldflags`
 
 # Object modules comprising this application ----------------
 OBJ = aes.o bytearray.o dist.o prng.o
@@ -14,10 +14,10 @@ TARGETS = snakeoil bruteforce
 all: $(TARGETS)
 
 snakeoil: $(OBJ-SO)
-	$(CXX)  -o $@ $(OBJ-SO) $(LIBS)
+	$(CXX) -o $@ $(OBJ-SO) $(LIBS)
 
 bruteforce: $(OBF-BF)
-	$(CXX)  -o $@ $(CXXFLAGS) $(OBF-BF) $(LIBS)
+	$(CXX) -o $@ $(CXXFLAGS) $(OBF-BF) $(LIBS)
 
 # Delete .o and exe files and force recompilation. ----------
 clean:
