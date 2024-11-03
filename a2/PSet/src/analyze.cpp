@@ -94,13 +94,16 @@ double Analyze::divergence(const ByteArray& s) const {
         q[i] /= totalBytes;
     }
 
+    // Access prob via the getter method
+    const double* prob = dist.getProb();
     double totalDivergence = 0.0;
     for (int b = 0; b < ALPHABETSIZE; ++b) {
-        totalDivergence += (dist.prob[b] - q[b]) * (dist.prob[b] - q[b]);
+        totalDivergence += (prob[b] - q[b]) * (prob[b] - q[b]);
     }
 
     return totalDivergence;
 }
+
 
 void Analyze::readKeySharesFile(const char* keyFile) {
     ifstream in(keyFile);
